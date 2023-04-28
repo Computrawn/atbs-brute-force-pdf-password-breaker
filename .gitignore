@@ -5,5 +5,5 @@
 venv
 credentials*.json
 logging.txt
-*.txt
-watermark.pdf
+*.pdf
+dictionary.txt
