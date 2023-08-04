@@ -2,6 +2,7 @@
 # brute_force.py — An exercise in manipulating PDFs.
 # For more information, see project_details.txt.
 
+# import concurrent.futures
 import logging
 from PyPDF2 import PdfReader
 
@@ -29,6 +30,7 @@ def create_dictionary():
     return stripped_list
 
 
+# TODO: Figure out how to run this through Process Pool Executor.
 def find_password(passwords):
     """Pass each word from list through decrypt method and print password if match found."""
     for word in passwords:
