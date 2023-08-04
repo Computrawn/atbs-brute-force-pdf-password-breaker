@@ -18,7 +18,7 @@ pdf_to_decrypt = f"{user_input}.pdf"
 reader = PdfReader(pdf_to_decrypt)
 
 
-def create_dictionary():
+def read_text_file():
     """Read contents of dictionary.txt and make stripped list
     of all words in uppercase and lowercase."""
     with open("dictionary.txt", "r", encoding="utf-8") as f:
@@ -39,5 +39,5 @@ def find_password(passwords):
             break
 
 
-password_list = create_dictionary()
+password_list = read_text_file()
 find_password(password_list)
