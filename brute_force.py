@@ -13,7 +13,7 @@ logging.basicConfig(
 # logging.disable(logging.CRITICAL)  # Note out to enable logging.
 
 
-def find_password():
+def find_password() -> None:
     """Check user-defined PDF against each word from generator using
     PyPDF2 decrypt method and print password if match found."""
 
@@ -35,7 +35,7 @@ def find_password():
             break
 
 
-def main():
+def main() -> None:
     find_password()
 
 
