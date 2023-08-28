@@ -2,7 +2,7 @@
 # brute_force.py — An exercise in manipulating PDFs.
 # For more information, see project_details.txt.
 
-# import concurrent.futures
+from typing import Generator
 import logging
 from PyPDF2 import PdfReader
 
@@ -13,31 +13,32 @@ logging.basicConfig(
 )
 # logging.disable(logging.CRITICAL)  # Note out to enable logging.
 
-user_input = input("Please type name of PDF you would like to crack: ")
-pdf_to_decrypt = f"{user_input}.pdf"
-reader = PdfReader(pdf_to_decrypt)
 
-
-def read_text_file():
-    """Read contents of dictionary.txt and make stripped list
-    of all words in uppercase and lowercase."""
+def read_text_file() -> Generator[str, None, None]:
+    """Create and return generator object of stripped contents of dictionary.txt."""
     with open("dictionary.txt", "r", encoding="utf-8") as f:
-        dictionary_list = f.readlines()
-        stripped_list = []
-        for word in dictionary_list:
-            stripped_list.append(word.strip())
-            stripped_list.append(word.lower().strip())
-    return stripped_list
+        return (word.strip() for word in f.readlines())
 
 
-# TODO: Figure out how to run this through Process Pool Executor.
 def find_password(passwords):
-    """Pass each word from list through decrypt method and print password if match found."""
+    """Check user-defined file against each word from generator using
+    PyPDF2 decrypt method and print password if match found."""
+    reader = PdfReader(
+        f"{input('Please type name of PDF you would like to crack: ')}.pdf"
+    )
+
     for word in passwords:
         if reader.decrypt(word) == 2:
             print(f"The password is {word}.")
             break
+        if reader.decrypt(word.lower()) == 2:
+            print(f"The password is {word.lower()}.")
+            break
 
 
-password_list = read_text_file()
-find_password(password_list)
+def main():
+    find_password(read_text_file())
+
+
+if __name__ == "__main__":
+    main()
