@@ -2,7 +2,6 @@
 # brute_force.py — An exercise in manipulating PDFs.
 # For more information, see project_details.txt.
 
-from typing import Generator
 import logging
 from PyPDF2 import PdfReader
 
@@ -14,18 +13,18 @@ logging.basicConfig(
 # logging.disable(logging.CRITICAL)  # Note out to enable logging.
 
 
-def read_text_file() -> Generator[str, None, None]:
-    """Create and return generator object of stripped contents of dictionary.txt."""
-    with open("dictionary.txt", "r", encoding="utf-8") as f:
-        return (word.strip() for word in f.readlines())
-
-
-def find_password(passwords):
-    """Check user-defined file against each word from generator using
+def find_password():
+    """Check user-defined PDF against each word from generator using
     PyPDF2 decrypt method and print password if match found."""
+
+    with open("dictionary.txt", "r", encoding="utf-8") as f:
+        passwords = (word.strip() for word in f.readlines())
+
     reader = PdfReader(
         f"{input('Please type name of PDF you would like to crack: ')}.pdf"
     )
+
+    print("Checking for password ...")
 
     for word in passwords:
         if reader.decrypt(word) == 2:
@@ -37,7 +36,7 @@ def find_password(passwords):
 
 
 def main():
-    find_password(read_text_file())
+    find_password()
 
 
 if __name__ == "__main__":
